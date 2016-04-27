@@ -1,0 +1,5 @@
+<?php
+
+function imagefield_slideshow_page_attachments(array &$attachments) {
+  $attachments['#attached']['library'][] = 'imagefield_slideshow/imagefield_slideshow';
+}

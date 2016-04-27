@@ -1,0 +1,5 @@
+imagefield_slideshow:
+  version: 1.x
+  js:
+    js/imagefield_slideshow.js: {}
+    /libraries/jquery.cycle/jquery.cycle.all.js: {}
