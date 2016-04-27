@@ -68,10 +68,9 @@ class ImagefieldSlideshowFieldFormatter extends ImageFormatterBase {
     foreach ($files as $delta => $file) {
       $uri = $file->getFileUri();
       $image_uri_value = ImageStyle::load('medium')->buildUrl($uri);
-
-      $a = '';
       $image_uri_values[] = $image_uri_value;
     }
+
     $elements[] = array(
       '#theme' => 'imagefield_slideshow',
       '#url' => $image_uri_values,
