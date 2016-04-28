@@ -16,7 +16,7 @@ use Drupal\image\Plugin\Field\FieldFormatter\ImageFormatterBase;
  *
  * @FieldFormatter(
  *   id = "imagefield_slideshow_field_formatter",
- *   label = @Translation("Imagefield slideshow field formatter"),
+ *   label = @Translation("Imagefield Slideshow"),
  *   field_types = {
  *     "image"
  *   }
