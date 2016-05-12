@@ -44,7 +44,7 @@ Current maintainers:
 This project has been sponsored by:
  * Valuebound
    Valuebound is a Drupal based enterprise Web solutions provider with a focus
-   on exclusive deliverables across hi-tech, education, media & publishing industries.
+   on exclusive deliverable across hi-tech, education, media & publishing industries.
    The web sites we create are feature rich with an extensive online scalability that
    exceeds millions of page-views each month. We at Valuebound make the most of Drupal
    CMS by leveraging some incredible features to create customized offerings.
