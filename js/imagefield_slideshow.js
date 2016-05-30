@@ -10,13 +10,13 @@
   $(document).ready(function () {
 
     jQuery('.imagefield_slideshow').cycle({
-      fx: 'fade',
+      fx: drupalSettings.imagefield_slideshow.effect,
       pause: 1,
       prev: '#prev',
       next: '#next'
     });
 
-    // alert(drupalSettings.fluffiness.cuddlySlider.foo);
+    console.log(drupalSettings.imagefield_slideshow.effect);
 
   });
 

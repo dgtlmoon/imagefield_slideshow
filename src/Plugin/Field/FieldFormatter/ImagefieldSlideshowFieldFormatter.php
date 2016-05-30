@@ -93,6 +93,7 @@ class ImagefieldSlideshowFieldFormatter extends ImageFormatterBase implements Co
     return array(
       // Implement default settings.
       'imagefield_slideshow_style' => '',
+      'imagefield_slideshow_style_effects' => '',
     ) + parent::defaultSettings();
   }
 
@@ -115,6 +116,43 @@ class ImagefieldSlideshowFieldFormatter extends ImageFormatterBase implements Co
         '#access' => $this->currentUser->hasPermission('administer image styles')
       ],
     ];
+    $effects = [
+      'none' => 'none',
+      'blindX' => 'blindX',
+      'blindY' => 'blindY',
+      'blindZ' => 'blindZ',
+      'cover' => 'cover',
+      'curtainX' => 'curtainX',
+      'curtainY' => 'curtainY',
+      'fade' => 'fade',
+      'fadeZoom' => 'fadeZoom',
+      'growX' => 'growX',
+      'growY' => 'growY',
+      'scrollUp' => 'scrollUp',
+      'scrollDown' => 'scrollDown',
+      'scrollLeft' => 'scrollLeft',
+      'scrollRight' => 'scrollRight',
+      'scrollHorz' => 'scrollHorz',
+      'scrollVert' => 'scrollVert',
+      'shuffle' => 'shuffle',
+      'slideX' => 'slideX',
+      'slideY' => 'slideY',
+      'toss' => 'toss',
+      'turnUp' => 'turnUp',
+      'turnDown' => 'turnDown',
+      'turnLeft' => 'turnLeft',
+      'turnRight' => 'turnRight',
+      'uncover' => 'uncover',
+      'wipe' => 'wipe',
+      'zoom' => 'zoom',
+    ];
+    $element['imagefield_slideshow_style_effects'] = [
+      '#type' => 'select',
+      '#title' => t('Effect'),
+      '#options' => $effects,
+      '#default_value' => $this->getSetting('imagefield_slideshow_style_effects'),
+      '#description' => t('The transition effect that will be used to change between images. Not all options below may be relevant depending on the effect. <a href="http://jquery.malsup.com/cycle/browser.html" target="_black">Follow this link to see examples of each effect.</a>'),
+    ];
     return $element;
   }
 
@@ -135,6 +173,11 @@ class ImagefieldSlideshowFieldFormatter extends ImageFormatterBase implements Co
     }
     else {
       $summary[] = t('Original image');
+    }
+
+    $image_style_effect = $this->getSetting('imagefield_slideshow_style_effects');
+    if (isset($image_style_effect)) {
+      $summary[] .= t('Effect :' . $image_style_effect);
     }
 
     return $summary;
@@ -176,7 +219,10 @@ class ImagefieldSlideshowFieldFormatter extends ImageFormatterBase implements Co
     $elements['#attached']['library'][] = 'imagefield_slideshow/imagefield_slideshow';
 
     // Attach the drupal
-    $elements['#attached']['drupalSettings']['fluffiness']['cuddlySlider']['foo'] = 'bar123';
+    $drupalSettings = [
+      'effect' => $this->getSetting('imagefield_slideshow_style_effects'),
+    ];
+    $elements['#attached']['drupalSettings']['imagefield_slideshow'] = $drupalSettings;
 
     return $elements;
   }
