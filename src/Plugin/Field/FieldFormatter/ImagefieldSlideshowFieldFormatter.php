@@ -175,6 +175,9 @@ class ImagefieldSlideshowFieldFormatter extends ImageFormatterBase implements Co
     // Attach the image field slide show library.
     $elements['#attached']['library'][] = 'imagefield_slideshow/imagefield_slideshow';
 
+    // Attach the drupal
+    $elements['#attached']['drupalSettings']['fluffiness']['cuddlySlider']['foo'] = 'bar123';
+
     return $elements;
   }
 

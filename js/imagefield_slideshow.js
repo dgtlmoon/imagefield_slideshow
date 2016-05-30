@@ -3,17 +3,21 @@
  * Defines Javascript behaviors for the imagefield_slideshow module.
  */
 
-(function ($) {
-  Drupal.behaviors.imagefieldSlideshow = {
-    attach: function () {
+(function ($, Drupal, drupalSettings) {
 
-      jQuery('.imagefield_slideshow').cycle({
-        fx: 'fade',
-        pause: 1,
-        prev: '#prev',
-        next: '#next'
-      });
+  'use strict';
 
-    }
-  };
-})(jQuery);
+  $(document).ready(function () {
+
+    jQuery('.imagefield_slideshow').cycle({
+      fx: 'fade',
+      pause: 1,
+      prev: '#prev',
+      next: '#next'
+    });
+
+    // alert(drupalSettings.fluffiness.cuddlySlider.foo);
+
+  });
+
+})(jQuery, Drupal, drupalSettings);
