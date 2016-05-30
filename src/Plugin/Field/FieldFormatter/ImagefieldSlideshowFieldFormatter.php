@@ -163,6 +163,9 @@ class ImagefieldSlideshowFieldFormatter extends ImageFormatterBase implements Co
       '#url' => $image_uri_values,
     );
 
+    // Attach the image field slide show library.
+    $elements['#attached']['library'][] = 'imagefield_slideshow/imagefield_slideshow';
+
     return $elements;
   }
 

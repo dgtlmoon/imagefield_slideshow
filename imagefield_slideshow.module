@@ -26,7 +26,7 @@ function imagefield_slideshow_help($route_name, RouteMatchInterface $route_match
  * Implements hook_page_attachments().
  */
 function imagefield_slideshow_page_attachments(array &$attachments) {
-  $attachments['#attached']['library'][] = 'imagefield_slideshow/imagefield_slideshow';
+  /*$attachments['#attached']['library'][] = 'imagefield_slideshow/imagefield_slideshow';*/
 }
 
 /**
