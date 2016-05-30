@@ -10,6 +10,7 @@ use Drupal\Core\Link;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Url;
+use Drupal\image\Entity\ImageStyle;
 use Drupal\image\Plugin\Field\FieldFormatter\ImageFormatterBase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -144,18 +145,26 @@ class ImagefieldSlideshowFieldFormatter extends ImageFormatterBase implements Co
    */
   public function viewElements(FieldItemListInterface $items, $langcode) {
     $elements = array();
-    $files = $this->getEntitiesToView($items, $langcode);
 
-    // Early opt-out if the field is empty.
-    if (empty($files)) {
-      return $elements;
+    $image_style_setting = $this->getSetting('imagefield_slideshow_style');
+    $image_style = NULL;
+    if (!empty($image_style_setting)) {
+      $image_style = entity_load('image_style', $image_style_setting);
     }
 
     $image_uri_values = [];
-    foreach ($files as $delta => $file) {
-      $uri = $file->getFileUri();
-      $image_uri_value = $this->imageStyleStorage->load('medium')->buildUrl($uri);
-      $image_uri_values[] = $image_uri_value;
+    foreach ($items as $delta => $item) {
+      if ($item->entity) {
+        $image_uri = $item->entity->getFileUri();
+        // Get image style URL
+        if ($image_style) {
+          $image_uri = ImageStyle::load($image_style->getName())->buildUrl($image_uri);
+        } else {
+          // Get absolute path for original image
+          $image_uri = $item->entity->url();
+        }
+        $image_uri_values[] = $image_uri;
+      }
     }
 
     $elements[] = array(
