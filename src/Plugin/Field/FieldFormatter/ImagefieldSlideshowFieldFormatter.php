@@ -92,8 +92,8 @@ class ImagefieldSlideshowFieldFormatter extends ImageFormatterBase implements Co
   public static function defaultSettings() {
     return array(
       // Implement default settings.
-      'imagefield_slideshow_style' => '',
-      'imagefield_slideshow_style_effects' => '',
+      'imagefield_slideshow_style' => 'large',
+      'imagefield_slideshow_style_effects' => 'fade',
     ) + parent::defaultSettings();
   }
 
