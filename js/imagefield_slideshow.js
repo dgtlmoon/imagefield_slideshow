@@ -11,12 +11,12 @@
 
     jQuery('.imagefield_slideshow').cycle({
       fx: drupalSettings.imagefield_slideshow.effect,
-      pause: 1,
+      pause: drupalSettings.imagefield_slideshow.pause,
       prev: '#prev',
       next: '#next'
     });
 
-    console.log(drupalSettings.imagefield_slideshow.effect);
+    console.log(drupalSettings.imagefield_slideshow);
 
   });
 

@@ -94,6 +94,7 @@ class ImagefieldSlideshowFieldFormatter extends ImageFormatterBase implements Co
       // Implement default settings.
       'imagefield_slideshow_style' => 'large',
       'imagefield_slideshow_style_effects' => 'fade',
+      'imagefield_slideshow_style_pause' => '1',
     ) + parent::defaultSettings();
   }
 
@@ -153,6 +154,17 @@ class ImagefieldSlideshowFieldFormatter extends ImageFormatterBase implements Co
       '#default_value' => $this->getSetting('imagefield_slideshow_style_effects'),
       '#description' => t('The transition effect that will be used to change between images. Not all options below may be relevant depending on the effect. <a href="http://jquery.malsup.com/cycle/browser.html" target="_black">Follow this link to see examples of each effect.</a>'),
     ];
+    $image_pause = [
+      '1' => 'Yes',
+      '' => 'No'
+    ];
+    $element['imagefield_slideshow_style_pause'] = [
+      '#title' => t('Image pause'),
+      '#type' => 'select',
+      '#default_value' => $this->getSetting('imagefield_slideshow_style_pause'),
+      '#options' => $image_pause,
+      '#description' => 'Should image be paused on hover.',
+    ];
     return $element;
   }
 
@@ -178,6 +190,11 @@ class ImagefieldSlideshowFieldFormatter extends ImageFormatterBase implements Co
     $image_style_effect = $this->getSetting('imagefield_slideshow_style_effects');
     if (isset($image_style_effect)) {
       $summary[] .= t('Effect :' . $image_style_effect);
+    }
+
+    $image_style_pause = $this->getSetting('imagefield_slideshow_style_pause');
+    if (!empty($image_style_pause)) {
+      $summary[] .= t('Pause :' . $image_style_pause);
     }
 
     return $summary;
@@ -221,6 +238,7 @@ class ImagefieldSlideshowFieldFormatter extends ImageFormatterBase implements Co
     // Attach the drupal
     $drupalSettings = [
       'effect' => $this->getSetting('imagefield_slideshow_style_effects'),
+      'pause' => $this->getSetting('imagefield_slideshow_style_pause'),
     ];
     $elements['#attached']['drupalSettings']['imagefield_slideshow'] = $drupalSettings;
 
