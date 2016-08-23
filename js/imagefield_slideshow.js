@@ -9,14 +9,20 @@
 
   $(document).ready(function () {
 
-    jQuery('.imagefield_slideshow').cycle({
+    var slideshow = jQuery('.imagefield_slideshow').cycle({
       fx: drupalSettings.imagefield_slideshow.effect,
       pause: drupalSettings.imagefield_slideshow.pause,
-      prev: '#prev',
-      next: '#next'
     });
 
-    console.log(drupalSettings.imagefield_slideshow);
+    // If prev/next setting is enabled.
+    if (drupalSettings.imagefield_slideshow.prev_next) {
+      jQuery('.imagefield_slideshow-prev').click(function() {
+        slideshow.cycle('prev');
+      });
+      jQuery('.imagefield_slideshow-next').click(function() {
+        slideshow.cycle('next');
+      });
+    }
 
   });
 

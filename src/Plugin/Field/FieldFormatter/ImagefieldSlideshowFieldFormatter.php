@@ -95,6 +95,7 @@ class ImagefieldSlideshowFieldFormatter extends ImageFormatterBase implements Co
       'imagefield_slideshow_style' => 'large',
       'imagefield_slideshow_style_effects' => 'fade',
       'imagefield_slideshow_style_pause' => '1',
+      'imagefield_slideshow_prev_next' => FALSE,
     ) + parent::defaultSettings();
   }
 
@@ -165,6 +166,12 @@ class ImagefieldSlideshowFieldFormatter extends ImageFormatterBase implements Co
       '#options' => $image_pause,
       '#description' => 'Should image be paused on hover.',
     ];
+    $element['imagefield_slideshow_prev_next'] = [
+      '#title' => $this->t('Enable Prev & Next button'),
+      '#type' => 'checkbox',
+      '#default_value' => $this->getSetting('imagefield_slideshow_prev_next'),
+      '#description' => $this->t('This will show the Prev and Next button for slideshow.'),
+    ];
     return $element;
   }
 
@@ -197,6 +204,11 @@ class ImagefieldSlideshowFieldFormatter extends ImageFormatterBase implements Co
       $summary[] .= t('Pause :' . $image_style_pause);
     }
 
+    $image_prev_next = $this->getSetting('imagefield_slideshow_prev_next');
+    if ($image_prev_next) {
+      $summary[] .= t('Prev & Next :' . $image_prev_next);
+    }
+
     return $summary;
   }
 
@@ -227,9 +239,16 @@ class ImagefieldSlideshowFieldFormatter extends ImageFormatterBase implements Co
       }
     }
 
+    // Enable prev next if only more than one image.
+    $prev_next = $this->getSetting('imagefield_slideshow_prev_next');
+    if (count($image_uri_values) <= 1) {
+      $prev_next = FALSE;
+    }
+
     $elements[] = array(
       '#theme' => 'imagefield_slideshow',
       '#url' => $image_uri_values,
+      '#prev_next' => $prev_next,
     );
 
     // Attach the image field slide show library.
@@ -239,6 +258,7 @@ class ImagefieldSlideshowFieldFormatter extends ImageFormatterBase implements Co
     $drupalSettings = [
       'effect' => $this->getSetting('imagefield_slideshow_style_effects'),
       'pause' => $this->getSetting('imagefield_slideshow_style_pause'),
+      'prev_next' => $prev_next,
     ];
     $elements['#attached']['drupalSettings']['imagefield_slideshow'] = $drupalSettings;
 

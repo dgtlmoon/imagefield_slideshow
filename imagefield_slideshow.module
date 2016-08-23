@@ -37,6 +37,7 @@ function imagefield_slideshow_theme() {
     'imagefield_slideshow' => array(
       'variables' => array(
         'url' => NULL,
+        'prev_next' => NULL,
       ),
     ),
   );

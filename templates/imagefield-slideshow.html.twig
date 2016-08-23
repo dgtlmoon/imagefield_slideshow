@@ -13,8 +13,14 @@
  * @ingroup themeable
  */
 #}
-<div class="imagefield_slideshow">
+<div class="imagefield_slideshow-wrapper">
+  <div class="imagefield_slideshow">
     {% for key,value in url %}
-        <img src="{{ value }}" />
+      <img src="{{ value }}" />
     {% endfor %}
+  </div>
+  {% if prev_next %}
+    <div class="imagefield_slideshow-prev">PREV</div>
+    <div class="imagefield_slideshow-next">NEXT</div>
+  {% endif %}
 </div>
