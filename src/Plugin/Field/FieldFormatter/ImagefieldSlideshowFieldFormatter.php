@@ -262,6 +262,9 @@ class ImagefieldSlideshowFieldFormatter extends ImageFormatterBase implements Co
     ];
     $elements['#attached']['drupalSettings']['imagefield_slideshow'] = $drupalSettings;
 
+    // Not to cache this field formatter.
+    $elements['#cache']['max-age'] = 0;
+
     return $elements;
   }
 
