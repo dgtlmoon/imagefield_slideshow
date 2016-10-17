@@ -1,0 +1,11 @@
+{
+  "require": {
+    "heykarthikwithu/cycle": "1.1"
+  },
+  "repositories": [
+    {
+      "url": "https://github.com/heykarthikwithu/cycle.git",
+      "type": "git"
+    }
+  ]
+}
