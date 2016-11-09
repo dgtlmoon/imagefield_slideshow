@@ -1,11 +1,21 @@
 {
+  "name": "drupal/imagefield_slideshow",
+  "description": "Creates a field formatter for image field, for which that particular field will be rendered as a basic slider.",
+  "type": "drupal-module",
+  "license": "GPL-2.0+",
+  "keywords": ["imagefield slideshow", "image field", "slideshow"],
+  "homepage": "https://www.drupal.org/project/imagefield_slideshow",
+  "authors": [
+    {
+      "name": "Karthik Kumar D K (heykarthikwithu)",
+      "homepage": "https://www.drupal.org/u/heykarthikwithu"
+    }
+  ],
+  "support": {
+    "issues": "https://www.drupal.org/project/issues/imagefield_slideshow",
+    "source": "https://cgit.drupalcode.org/imagefield_slideshow"
+  },
   "require": {
     "heykarthikwithu/cycle": "1.1"
-  },
-  "repositories": [
-    {
-      "url": "https://github.com/heykarthikwithu/cycle.git",
-      "type": "git"
-    }
-  ]
+  }
 }
