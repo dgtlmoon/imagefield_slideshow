@@ -96,6 +96,7 @@ class ImagefieldSlideshowFieldFormatter extends ImageFormatterBase implements Co
       'imagefield_slideshow_style_effects' => 'fade',
       'imagefield_slideshow_style_pause' => '1',
       'imagefield_slideshow_prev_next' => FALSE,
+      'imagefield_slideshow_transition_speed' => FALSE,
     ) + parent::defaultSettings();
   }
 
@@ -172,6 +173,16 @@ class ImagefieldSlideshowFieldFormatter extends ImageFormatterBase implements Co
       '#default_value' => $this->getSetting('imagefield_slideshow_prev_next'),
       '#description' => $this->t('This will show the Prev and Next button for slideshow.'),
     ];
+    $range0 = array_combine(range(100, 1000, 100), range(100, 1000, 100));
+    $range1 = array_combine(range(2000, 10000, 1000), range(2000, 10000, 1000));
+    $transition_speed = array_replace($range0, $range1);
+    $element['imagefield_slideshow_transition_speed'] = [
+      '#type' => 'select',
+      '#title' => t('Transition Speed'),
+      '#options' => $transition_speed,
+      '#default_value' => $this->getSetting('imagefield_slideshow_transition_speed'),
+      '#description' => t('The transition speed between images.'),
+    ];
     return $element;
   }
 
@@ -207,6 +218,11 @@ class ImagefieldSlideshowFieldFormatter extends ImageFormatterBase implements Co
     $image_prev_next = $this->getSetting('imagefield_slideshow_prev_next');
     if ($image_prev_next) {
       $summary[] .= t('Prev & Next :' . $image_prev_next);
+    }
+
+    $image_transition_speed = $this->getSetting('imagefield_slideshow_transition_speed');
+    if ($image_transition_speed) {
+      $summary[] .= t('Transition Speed :' . $image_transition_speed . ' fx');
     }
 
     return $summary;
@@ -259,6 +275,7 @@ class ImagefieldSlideshowFieldFormatter extends ImageFormatterBase implements Co
       'effect' => $this->getSetting('imagefield_slideshow_style_effects'),
       'pause' => $this->getSetting('imagefield_slideshow_style_pause'),
       'prev_next' => $prev_next,
+      'speed' => $this->getSetting('imagefield_slideshow_transition_speed')
     ];
     $elements['#attached']['drupalSettings']['imagefield_slideshow'] = $drupalSettings;
 
