@@ -97,6 +97,7 @@ class ImagefieldSlideshowFieldFormatter extends ImageFormatterBase implements Co
       'imagefield_slideshow_style_pause' => '1',
       'imagefield_slideshow_prev_next' => FALSE,
       'imagefield_slideshow_transition_speed' => FALSE,
+      'imagefield_slideshow_timeout' => FALSE,
     ) + parent::defaultSettings();
   }
 
@@ -183,6 +184,14 @@ class ImagefieldSlideshowFieldFormatter extends ImageFormatterBase implements Co
       '#default_value' => $this->getSetting('imagefield_slideshow_transition_speed'),
       '#description' => t('The transition speed between images.'),
     ];
+    $timeout = $transition_speed;
+    $element['imagefield_slideshow_timeout'] = [
+      '#type' => 'select',
+      '#title' => t('Timeout'),
+      '#options' => $timeout,
+      '#default_value' => $this->getSetting('imagefield_slideshow_timeout'),
+      '#description' => t('The timeout for slides.'),
+    ];
     return $element;
   }
 
@@ -223,6 +232,11 @@ class ImagefieldSlideshowFieldFormatter extends ImageFormatterBase implements Co
     $image_transition_speed = $this->getSetting('imagefield_slideshow_transition_speed');
     if ($image_transition_speed) {
       $summary[] .= t('Transition Speed :' . $image_transition_speed . ' fx');
+    }
+
+    $image_slideshow_timeout = $this->getSetting('imagefield_slideshow_timeout');
+    if ($image_slideshow_timeout) {
+      $summary[] .= t('Timeout :' . $image_slideshow_timeout);
     }
 
     return $summary;
@@ -275,7 +289,8 @@ class ImagefieldSlideshowFieldFormatter extends ImageFormatterBase implements Co
       'effect' => $this->getSetting('imagefield_slideshow_style_effects'),
       'pause' => $this->getSetting('imagefield_slideshow_style_pause'),
       'prev_next' => $prev_next,
-      'speed' => $this->getSetting('imagefield_slideshow_transition_speed')
+      'speed' => $this->getSetting('imagefield_slideshow_transition_speed'),
+      'timeout' => $this->getSetting('imagefield_slideshow_timeout'),
     ];
     $elements['#attached']['drupalSettings']['imagefield_slideshow'] = $drupalSettings;
 

@@ -12,7 +12,8 @@
     var slideshow = jQuery('.imagefield_slideshow').cycle({
       fx: drupalSettings.imagefield_slideshow.effect,
       pause: drupalSettings.imagefield_slideshow.pause,
-      speed: drupalSettings.imagefield_slideshow.speed
+      speed: drupalSettings.imagefield_slideshow.speed,
+      timeout: drupalSettings.imagefield_slideshow.timeout
     });
 
     // If prev/next setting is enabled.
