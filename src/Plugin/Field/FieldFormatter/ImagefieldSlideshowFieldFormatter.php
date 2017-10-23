@@ -251,7 +251,7 @@ class ImagefieldSlideshowFieldFormatter extends ImageFormatterBase implements Co
     $image_style_setting = $this->getSetting('imagefield_slideshow_style');
     $image_style = NULL;
     if (!empty($image_style_setting)) {
-      $image_style = entity_load('image_style', $image_style_setting);
+      $image_style = \Drupal::entityTypeManager()->getStorage('image_style')->load($image_style_setting);
     }
 
     $image_uri_values = [];
