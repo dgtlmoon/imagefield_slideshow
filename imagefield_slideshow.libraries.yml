@@ -2,4 +2,4 @@ imagefield_slideshow:
   version: 1.x
   js:
     js/imagefield_slideshow.js: {}
-    vendor/heykarthikwithu/cycle/jquery.cycle.all.js: {}
+    js/jquery.cycle.all.js: {}

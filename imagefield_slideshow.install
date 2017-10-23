@@ -8,23 +8,23 @@
 /**
  * Implements hook_requirements.
  */
-function imagefield_slideshow_requirements($phase) {
-  $requirements = array();
-
-  if ($phase == 'install') {
-    // Check if library installed on module install.
-    $file_path = DRUPAL_ROOT . "/" . drupal_get_path("module", "imagefield_slideshow") . '/vendor/heykarthikwithu/cycle/jquery.cycle.all.js';
-    if (!file_exists($file_path)) {
-      $error_description = 'Install jquery.cycle library';
-      $error_description .= " \n Follow instructions on https://www.drupal.org/project/imagefield_slideshow module page.";
-      $error_description .= " \n Check 'Installation' section on the drupal.orgs module page.";
-      $requirements['imagefield_slideshow'] = array(
-        'title' => t('Imagefield Slideshow'),
-        'description' => $error_description,
-        'severity' => REQUIREMENT_ERROR,
-      );
-    }
-  }
-
-  return $requirements;
-}
+//function imagefield_slideshow_requirements($phase) {
+//  $requirements = array();
+//
+//  if ($phase == 'install') {
+//    // Check if library installed on module install.
+//    $file_path = DRUPAL_ROOT . "/" . drupal_get_path("module", "imagefield_slideshow") . '/vendor/heykarthikwithu/cycle/jquery.cycle.all.js';
+//    if (!file_exists($file_path)) {
+//      $error_description = 'Install jquery.cycle library';
+//      $error_description .= " \n Follow instructions on https://www.drupal.org/project/imagefield_slideshow module page.";
+//      $error_description .= " \n Check 'Installation' section on the drupal.orgs module page.";
+//      $requirements['imagefield_slideshow'] = array(
+//        'title' => t('Imagefield Slideshow'),
+//        'description' => $error_description,
+//        'severity' => REQUIREMENT_ERROR,
+//      );
+//    }
+//  }
+//
+//  return $requirements;
+//}
