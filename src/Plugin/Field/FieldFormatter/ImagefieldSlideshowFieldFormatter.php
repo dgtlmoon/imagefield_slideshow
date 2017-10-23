@@ -107,14 +107,14 @@ class ImagefieldSlideshowFieldFormatter extends ImageFormatterBase implements Co
   public function settingsForm(array $form, FormStateInterface $form_state) {
     $image_styles = image_style_options(FALSE);
     $description_link = Link::fromTextAndUrl(
-      $this->t('Configure Image Styles'),
+      $this->t("Configure Image Styles"),
       Url::fromRoute('entity.image_style.collection')
     );
     $element['imagefield_slideshow_style'] = [
-      '#title' => t('Image style'),
+      '#title' => t("Image style"),
       '#type' => 'select',
       '#default_value' => $this->getSetting('imagefield_slideshow_style'),
-      '#empty_option' => t('None (original image)'),
+      '#empty_option' => t("None (original image)"),
       '#options' => $image_styles,
       '#description' => $description_link->toRenderable() + [
         '#access' => $this->currentUser->hasPermission('administer image styles')
@@ -152,24 +152,24 @@ class ImagefieldSlideshowFieldFormatter extends ImageFormatterBase implements Co
     ];
     $element['imagefield_slideshow_style_effects'] = [
       '#type' => 'select',
-      '#title' => t('Effect'),
+      '#title' => t("Effect"),
       '#options' => $effects,
       '#default_value' => $this->getSetting('imagefield_slideshow_style_effects'),
-      '#description' => t('The transition effect that will be used to change between images. Not all options below may be relevant depending on the effect. <a href="http://jquery.malsup.com/cycle/browser.html" target="_black">Follow this link to see examples of each effect.</a>'),
+      '#description' => t("The transition effect that will be used to change between images. Not all options below may be relevant depending on the effect. <a href='http://jquery.malsup.com/cycle/browser.html' target='_black'>Follow this link to see examples of each effect.</a>"),
     ];
     $image_pause = [
       '1' => 'Yes',
       '' => 'No'
     ];
     $element['imagefield_slideshow_style_pause'] = [
-      '#title' => t('Image pause'),
+      '#title' => t("Image pause"),
       '#type' => 'select',
       '#default_value' => $this->getSetting('imagefield_slideshow_style_pause'),
       '#options' => $image_pause,
-      '#description' => 'Should image be paused on hover.',
+      '#description' => t("Should image be paused on hover."),
     ];
     $element['imagefield_slideshow_prev_next'] = [
-      '#title' => $this->t('Enable Prev & Next button'),
+      '#title' => $this->t("Enable Prev & Next button"),
       '#type' => 'checkbox',
       '#default_value' => $this->getSetting('imagefield_slideshow_prev_next'),
       '#description' => $this->t('This will show the Prev and Next button for slideshow.'),
@@ -179,18 +179,18 @@ class ImagefieldSlideshowFieldFormatter extends ImageFormatterBase implements Co
     $transition_speed = array_replace($range0, $range1);
     $element['imagefield_slideshow_transition_speed'] = [
       '#type' => 'select',
-      '#title' => t('Transition Speed'),
+      '#title' => t("Transition Speed"),
       '#options' => $transition_speed,
       '#default_value' => $this->getSetting('imagefield_slideshow_transition_speed'),
-      '#description' => t('The transition speed between images.'),
+      '#description' => t("The transition speed between images."),
     ];
     $timeout = $transition_speed;
     $element['imagefield_slideshow_timeout'] = [
       '#type' => 'select',
-      '#title' => t('Timeout'),
+      '#title' => t("Timeout"),
       '#options' => $timeout,
       '#default_value' => $this->getSetting('imagefield_slideshow_timeout'),
-      '#description' => t('The timeout for slides.'),
+      '#description' => t("The timeout for slides."),
     ];
     return $element;
   }
@@ -208,35 +208,35 @@ class ImagefieldSlideshowFieldFormatter extends ImageFormatterBase implements Co
     // their styles in code.
     $image_style_setting = $this->getSetting('imagefield_slideshow_style');
     if (isset($image_styles[$image_style_setting])) {
-      $summary[] = t('Image style: @style', array('@style' => $image_styles[$image_style_setting]));
+      $summary[] = t("Image style: @style", array('@style' => $image_styles[$image_style_setting]));
     }
     else {
-      $summary[] = t('Original image');
+      $summary[] = t("Original image");
     }
 
     $image_style_effect = $this->getSetting('imagefield_slideshow_style_effects');
     if (isset($image_style_effect)) {
-      $summary[] .= t('Effect :' . $image_style_effect);
+      $summary[] .= t("Effect :" . $image_style_effect);
     }
 
     $image_style_pause = $this->getSetting('imagefield_slideshow_style_pause');
     if (!empty($image_style_pause)) {
-      $summary[] .= t('Pause :' . $image_style_pause);
+      $summary[] .= t("Pause :" . $image_style_pause);
     }
 
     $image_prev_next = $this->getSetting('imagefield_slideshow_prev_next');
     if ($image_prev_next) {
-      $summary[] .= t('Prev & Next :' . $image_prev_next);
+      $summary[] .= t("Prev & Next :" . $image_prev_next);
     }
 
     $image_transition_speed = $this->getSetting('imagefield_slideshow_transition_speed');
     if ($image_transition_speed) {
-      $summary[] .= t('Transition Speed :' . $image_transition_speed . ' fx');
+      $summary[] .= t("Transition Speed :" . $image_transition_speed . ' fx');
     }
 
     $image_slideshow_timeout = $this->getSetting('imagefield_slideshow_timeout');
     if ($image_slideshow_timeout) {
-      $summary[] .= t('Timeout :' . $image_slideshow_timeout);
+      $summary[] .= t("Timeout :" . $image_slideshow_timeout);
     }
 
     return $summary;
@@ -255,7 +255,7 @@ class ImagefieldSlideshowFieldFormatter extends ImageFormatterBase implements Co
     }
 
     $image_uri_values = [];
-    foreach ($items as $delta => $item) {
+    foreach ($items as $item) {
       if ($item->entity) {
         $image_uri = $item->entity->getFileUri();
         // Get image style URL
