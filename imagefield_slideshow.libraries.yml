@@ -1,5 +1,8 @@
 imagefield_slideshow:
   version: 1.x
+  css:
+    theme:
+      css/imagefield_slideshow.css: {}
   js:
     js/imagefield_slideshow.js: {}
     js/jquery.cycle.all.js: {}
