@@ -4,7 +4,7 @@ CONTENTS OF THIS FILE
  * Requirements
  * Installation
  * Configuration
- * Maintainers
+ * Maintainer
 
 
 INTRODUCTION
@@ -20,24 +20,24 @@ This module does not have any dependency.
 
 INSTALLATION
 ------------
-* Create a libraries directory on your drupal instance's root folder.
-* Create a directory within libraries named jquery.cycle.
-* Download the latest version of the jQuery Cycle plugin
-  (http://jquery.malsup.com/cycle/download.html)
-  place it inside the jquery.cycle directory.
-  The filename should be: jquery.cycle.all.js
-* Enable the Imagefield Slideshow module from the modules page.
+* Download the module and place in contrib module folder.
+* Enable the Imagefield Slideshow module from the, modules page / drush / drupal console.
 * You should now see a new field formatter for image fields,
-  Ex: under Manage display section of content types.
-* Make sure image field is unlimited.
+  Ex: under Manage display section of each content types.
 
 
 CONFIGURATION
 -------------
-Visit any image fields display settings, you will be able to find
+* Visit any image fields display settings, you will be able to find
 the Imagefield Slideshow formatter, select this one and one can also
 select image styles.
-Ex: admin/structure/types/manage/article/display
+Ex: admin/structure/types/manage/<content-type-machine-name>/display
+* Have the image field settings "Allowed number of values"
+to unlimited / limited(more than 1 image).
+* Have a custom image style defined under
+(http://d8.local/admin/config/media/image-styles)
+* Add content & upload more than 1 images to the node and Save..
+On node view, slideshow will appear for that image field.
 
 
 MAINTAINERS
