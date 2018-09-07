@@ -4,7 +4,7 @@ CONTENTS OF THIS FILE
  * Requirements
  * Installation
  * Configuration
- * Maintainer
+ * Maintainers
 
 
 INTRODUCTION
