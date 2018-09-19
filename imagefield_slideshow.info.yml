@@ -4,4 +4,4 @@ description: 'Creates a field formatter for image field, for which that particul
 core: 8.x
 package: Field
 dependencies:
-  - image
+  - drupal:image
