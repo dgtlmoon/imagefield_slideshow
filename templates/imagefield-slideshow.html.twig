@@ -20,7 +20,11 @@
          data-cycle-speed="{{ speed }}"
          data-cycle-timeout="{{ timeout }}"
          data-cycle-prev="#imagefield_slideshow-prev"
-         data-cycle-next="#imagefield_slideshow-next">
+         data-cycle-next="#imagefield_slideshow-next"
+         data-cycle-loader="wait">
+        {% if pager %}
+            <div class="cycle-pager"></div>
+        {% endif %}
         {% for key,value in url %}
             <img src="{{ value }}" />
         {% endfor %}

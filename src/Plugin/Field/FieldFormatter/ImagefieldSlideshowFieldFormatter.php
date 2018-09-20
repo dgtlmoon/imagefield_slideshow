@@ -98,6 +98,7 @@ class ImagefieldSlideshowFieldFormatter extends ImageFormatterBase implements Co
       'imagefield_slideshow_prev_next' => FALSE,
       'imagefield_slideshow_transition_speed' => FALSE,
       'imagefield_slideshow_timeout' => FALSE,
+      'imagefield_slideshow_pager' => FALSE,
     ) + parent::defaultSettings();
   }
 
@@ -193,6 +194,12 @@ class ImagefieldSlideshowFieldFormatter extends ImageFormatterBase implements Co
       '#default_value' => $this->getSetting('imagefield_slideshow_timeout'),
       '#description' => t("The timeout for slides."),
     ];
+    $element['imagefield_slideshow_pager'] = [
+      '#title' => $this->t("Enable Pager ?"),
+      '#type' => 'checkbox',
+      '#default_value' => $this->getSetting('imagefield_slideshow_pager'),
+      '#description' => $this->t('This will show the Pager on slideshow.'),
+    ];
     return $element;
   }
 
@@ -240,6 +247,11 @@ class ImagefieldSlideshowFieldFormatter extends ImageFormatterBase implements Co
       $summary[] .= t("Timeout :" . $image_slideshow_timeout);
     }
 
+    $image_pager = $this->getSetting('imagefield_slideshow_pager');
+    if ($image_pager) {
+      $summary[] .= t("Pager :" . $image_pager);
+    }
+
     return $summary;
   }
 
@@ -284,6 +296,7 @@ class ImagefieldSlideshowFieldFormatter extends ImageFormatterBase implements Co
       '#pause' => $this->getSetting('imagefield_slideshow_style_pause'),
       '#speed' => $this->getSetting('imagefield_slideshow_transition_speed'),
       '#timeout' => $this->getSetting('imagefield_slideshow_timeout'),
+      '#pager' => $this->getSetting('imagefield_slideshow_pager'),
     );
 
     // Attach the image field slide show library.
