@@ -1,5 +1,7 @@
 imagefield_slideshow:
   version: 1.x
   js:
-    js/imagefield_slideshow.js: {}
-    js/jquery.cycle.all.js: {}
+    js/jquery.cycle2.min.js: {} # http://malsup.github.io/min/jquery.cycle2.min.js
+  css:
+    theme:
+      css/imagefield-slideshow.css: {}

@@ -1,0 +1,7 @@
+/* Imagefield Slideshow css */
+.imagefield_slideshow-wrapper {
+    display: inline-block;
+}
+.imagefield_slideshow-wrapper .prev-next {
+    text-align: center;
+}

@@ -94,7 +94,7 @@ class ImagefieldSlideshowFieldFormatter extends ImageFormatterBase implements Co
       // Implement default settings.
       'imagefield_slideshow_style' => 'large',
       'imagefield_slideshow_style_effects' => 'fade',
-      'imagefield_slideshow_style_pause' => '1',
+      'imagefield_slideshow_style_pause' => 'false',
       'imagefield_slideshow_prev_next' => FALSE,
       'imagefield_slideshow_transition_speed' => FALSE,
       'imagefield_slideshow_timeout' => FALSE,
@@ -129,6 +129,7 @@ class ImagefieldSlideshowFieldFormatter extends ImageFormatterBase implements Co
       'curtainX' => 'curtainX',
       'curtainY' => 'curtainY',
       'fade' => 'fade',
+      'fadeout' => 'fadeout',
       'fadeZoom' => 'fadeZoom',
       'growX' => 'growX',
       'growY' => 'growY',
@@ -158,8 +159,8 @@ class ImagefieldSlideshowFieldFormatter extends ImageFormatterBase implements Co
       '#description' => t("The transition effect that will be used to change between images. Not all options below may be relevant depending on the effect. <a href='http://jquery.malsup.com/cycle/browser.html' target='_black'>Follow this link to see examples of each effect.</a>"),
     ];
     $image_pause = [
-      '1' => 'Yes',
-      '' => 'No'
+      'true' => "Yes",
+      'false' => "No"
     ];
     $element['imagefield_slideshow_style_pause'] = [
       '#title' => t("Image pause"),
@@ -279,20 +280,14 @@ class ImagefieldSlideshowFieldFormatter extends ImageFormatterBase implements Co
       '#theme' => 'imagefield_slideshow',
       '#url' => $image_uri_values,
       '#prev_next' => $prev_next,
+      '#effect' => $this->getSetting('imagefield_slideshow_style_effects'),
+      '#pause' => $this->getSetting('imagefield_slideshow_style_pause'),
+      '#speed' => $this->getSetting('imagefield_slideshow_transition_speed'),
+      '#timeout' => $this->getSetting('imagefield_slideshow_timeout'),
     );
 
     // Attach the image field slide show library.
     $elements['#attached']['library'][] = 'imagefield_slideshow/imagefield_slideshow';
-
-    // Attach the drupal
-    $drupalSettings = [
-      'effect' => $this->getSetting('imagefield_slideshow_style_effects'),
-      'pause' => $this->getSetting('imagefield_slideshow_style_pause'),
-      'prev_next' => $prev_next,
-      'speed' => $this->getSetting('imagefield_slideshow_transition_speed'),
-      'timeout' => $this->getSetting('imagefield_slideshow_timeout'),
-    ];
-    $elements['#attached']['drupalSettings']['imagefield_slideshow'] = $drupalSettings;
 
     // Not to cache this field formatter.
     $elements['#cache']['max-age'] = 0;

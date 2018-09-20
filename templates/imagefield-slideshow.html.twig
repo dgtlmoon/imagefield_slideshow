@@ -14,13 +14,21 @@
  */
 #}
 <div class="imagefield_slideshow-wrapper">
-    <div class="imagefield_slideshow">
+    <div class="cycle-slideshow"
+         data-cycle-pause-on-hover='{{ pause }}'
+         data-cycle-fx="{{ effect }}"
+         data-cycle-speed="{{ speed }}"
+         data-cycle-timeout="{{ timeout }}"
+         data-cycle-prev="#imagefield_slideshow-prev"
+         data-cycle-next="#imagefield_slideshow-next">
         {% for key,value in url %}
             <img src="{{ value }}" />
         {% endfor %}
     </div>
     {% if prev_next %}
-        <div class="imagefield_slideshow-prev">PREV</div>
-        <div class="imagefield_slideshow-next">NEXT</div>
+        <div class="prev-next">
+            <a href=# id="imagefield_slideshow-prev">Prev</a>
+            <a href=# id="imagefield_slideshow-next">Next</a>
+        </div>
     {% endif %}
 </div>

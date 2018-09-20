@@ -30,7 +30,11 @@ function imagefield_slideshow_theme() {
     'imagefield_slideshow' => array(
       'variables' => array(
         'url' => NULL,
+        'effect' => NULL,
+        'pause' => NULL,
         'prev_next' => NULL,
+        'speed' => NULL,
+        'timeout' => NULL,
       ),
     ),
   );
