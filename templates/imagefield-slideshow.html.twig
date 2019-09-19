@@ -13,14 +13,16 @@
  * @ingroup themeable
  */
 #}
+{% set prev = random() %}
+{% set next = random() %}
 <div class="imagefield_slideshow-wrapper">
     <div class="cycle-slideshow"
          data-cycle-pause-on-hover='{{ pause }}'
          data-cycle-fx="{{ effect }}"
          data-cycle-speed="{{ speed }}"
          data-cycle-timeout="{{ timeout }}"
-         data-cycle-prev="#imagefield_slideshow-prev"
-         data-cycle-next="#imagefield_slideshow-next"
+         data-cycle-prev="#imagefield_slideshow-prev-{{ prev }}"
+         data-cycle-next="#imagefield_slideshow-next-{{ next }}"
          data-cycle-loader="wait">
         {% if pager %}
             <div class="cycle-pager"></div>
@@ -31,8 +33,8 @@
     </div>
     {% if prev_next %}
         <div class="prev-next">
-            <a href=# id="imagefield_slideshow-prev">Prev</a>
-            <a href=# id="imagefield_slideshow-next">Next</a>
+            <a href=# id="imagefield_slideshow-prev-{{ prev }}">Prev</a>
+            <a href=# id="imagefield_slideshow-next-{{ next }}">Next</a>
         </div>
     {% endif %}
 </div>
