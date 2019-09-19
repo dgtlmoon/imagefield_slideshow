@@ -265,6 +265,12 @@ class ImagefieldSlideshowFieldFormatter extends ImageFormatterBase implements Co
   public function viewElements(FieldItemListInterface $items, $langcode) {
     $elements = [];
 
+    // Early opt-out if the field is empty.
+    $images = $this->getEntitiesToView($items, $langcode);
+    if (empty($images)) {
+      return $elements;
+    }
+
     $image_style_setting = $this->getSetting('imagefield_slideshow_style');
     $image_style = NULL;
     if (!empty($image_style_setting)) {
@@ -272,19 +278,17 @@ class ImagefieldSlideshowFieldFormatter extends ImageFormatterBase implements Co
     }
 
     $image_uri_values = [];
-    foreach ($items as $item) {
-      if ($item->entity) {
-        $image_uri = $item->entity->getFileUri();
-        // Get image style URL.
-        if ($image_style) {
-          $image_uri = ImageStyle::load($image_style->getName())->buildUrl($image_uri);
-        }
-        else {
-          // Get absolute path for original image.
-          $image_uri = $item->entity->url();
-        }
-        $image_uri_values[] = $image_uri;
+    foreach ($images as $image) {
+      $image_uri = $image->getFileUri();
+      // Get image style URL
+      if ($image_style) {
+        $image_uri = ImageStyle::load($image_style->getName())->buildUrl($image_uri);
       }
+      else {
+        // Get absolute path for original image
+        $image_uri = $image->url();
+      }
+      $image_uri_values[] = $image_uri;
     }
 
     // Enable prev next if only more than one image.
