@@ -90,7 +90,7 @@ class ImagefieldSlideshowFieldFormatter extends ImageFormatterBase implements Co
    * {@inheritdoc}
    */
   public static function defaultSettings() {
-    return array(
+    return [
       // Implement default settings.
       'imagefield_slideshow_style' => 'large',
       'imagefield_slideshow_style_effects' => 'fade',
@@ -99,7 +99,7 @@ class ImagefieldSlideshowFieldFormatter extends ImageFormatterBase implements Co
       'imagefield_slideshow_transition_speed' => FALSE,
       'imagefield_slideshow_timeout' => FALSE,
       'imagefield_slideshow_pager' => FALSE,
-    ) + parent::defaultSettings();
+    ] + parent::defaultSettings();
   }
 
   /**
@@ -118,39 +118,39 @@ class ImagefieldSlideshowFieldFormatter extends ImageFormatterBase implements Co
       '#empty_option' => t("None (original image)"),
       '#options' => $image_styles,
       '#description' => $description_link->toRenderable() + [
-        '#access' => $this->currentUser->hasPermission('administer image styles')
+        '#access' => $this->currentUser->hasPermission('administer image styles'),
       ],
     ];
     $effects = [
       'none' => 'none',
-//      'blindX' => 'blindX',
-//      'blindY' => 'blindY',
-//      'blindZ' => 'blindZ',
-//      'cover' => 'cover',
-//      'curtainX' => 'curtainX',
-//      'curtainY' => 'curtainY',
+    // 'blindX' => 'blindX',
+    //      'blindY' => 'blindY',
+    //      'blindZ' => 'blindZ',
+    //      'cover' => 'cover',
+    //      'curtainX' => 'curtainX',
+    //      'curtainY' => 'curtainY',
       'fade' => 'fade',
       'fadeout' => 'fadeout',
-//      'fadeZoom' => 'fadeZoom',
-//      'growX' => 'growX',
-//      'growY' => 'growY',
-//      'scrollUp' => 'scrollUp',
-//      'scrollDown' => 'scrollDown',
-//      'scrollLeft' => 'scrollLeft',
-//      'scrollRight' => 'scrollRight',
+    // 'fadeZoom' => 'fadeZoom',
+    //      'growX' => 'growX',
+    //      'growY' => 'growY',
+    //      'scrollUp' => 'scrollUp',
+    //      'scrollDown' => 'scrollDown',
+    //      'scrollLeft' => 'scrollLeft',
+    //      'scrollRight' => 'scrollRight',
       'scrollHorz' => 'scrollHorz',
-//      'scrollVert' => 'scrollVert',
-//      'shuffle' => 'shuffle',
-//      'slideX' => 'slideX',
-//      'slideY' => 'slideY',
-//      'toss' => 'toss',
-//      'turnUp' => 'turnUp',
-//      'turnDown' => 'turnDown',
-//      'turnLeft' => 'turnLeft',
-//      'turnRight' => 'turnRight',
-//      'uncover' => 'uncover',
-//      'wipe' => 'wipe',
-//      'zoom' => 'zoom',
+    // 'scrollVert' => 'scrollVert',
+    //      'shuffle' => 'shuffle',
+    //      'slideX' => 'slideX',
+    //      'slideY' => 'slideY',
+    //      'toss' => 'toss',
+    //      'turnUp' => 'turnUp',
+    //      'turnDown' => 'turnDown',
+    //      'turnLeft' => 'turnLeft',
+    //      'turnRight' => 'turnRight',
+    //      'uncover' => 'uncover',
+    //      'wipe' => 'wipe',
+    //      'zoom' => 'zoom',
       'flipHorz' => 'flipHorz',
       'flipVert' => 'flipVert',
       'shuffle' => 'shuffle',
@@ -164,7 +164,7 @@ class ImagefieldSlideshowFieldFormatter extends ImageFormatterBase implements Co
     ];
     $image_pause = [
       'true' => "Yes",
-      'false' => "No"
+      'false' => "No",
     ];
     $element['imagefield_slideshow_style_pause'] = [
       '#title' => t("Image pause"),
@@ -189,7 +189,8 @@ class ImagefieldSlideshowFieldFormatter extends ImageFormatterBase implements Co
       '#default_value' => $this->getSetting('imagefield_slideshow_transition_speed'),
       '#description' => t("The transition speed between images."),
     ];
-    $timeout = $transition_speed;
+    $range3 = array_combine(range(0, 1000, 100), range(0, 1000, 100));
+    $timeout = array_replace($range3, $range1);
     $element['imagefield_slideshow_timeout'] = [
       '#type' => 'select',
       '#title' => t("Timeout"),
@@ -219,7 +220,7 @@ class ImagefieldSlideshowFieldFormatter extends ImageFormatterBase implements Co
     // their styles in code.
     $image_style_setting = $this->getSetting('imagefield_slideshow_style');
     if (isset($image_styles[$image_style_setting])) {
-      $summary[] = t("Image style: @style", array('@style' => $image_styles[$image_style_setting]));
+      $summary[] = t("Image style: @style", ['@style' => $image_styles[$image_style_setting]]);
     }
     else {
       $summary[] = t("Original image");
@@ -262,7 +263,7 @@ class ImagefieldSlideshowFieldFormatter extends ImageFormatterBase implements Co
    * {@inheritdoc}
    */
   public function viewElements(FieldItemListInterface $items, $langcode) {
-    $elements = array();
+    $elements = [];
 
     $image_style_setting = $this->getSetting('imagefield_slideshow_style');
     $image_style = NULL;
@@ -274,11 +275,12 @@ class ImagefieldSlideshowFieldFormatter extends ImageFormatterBase implements Co
     foreach ($items as $item) {
       if ($item->entity) {
         $image_uri = $item->entity->getFileUri();
-        // Get image style URL
+        // Get image style URL.
         if ($image_style) {
           $image_uri = ImageStyle::load($image_style->getName())->buildUrl($image_uri);
-        } else {
-          // Get absolute path for original image
+        }
+        else {
+          // Get absolute path for original image.
           $image_uri = $item->entity->url();
         }
         $image_uri_values[] = $image_uri;
@@ -291,7 +293,7 @@ class ImagefieldSlideshowFieldFormatter extends ImageFormatterBase implements Co
       $prev_next = FALSE;
     }
 
-    $elements[] = array(
+    $elements[] = [
       '#theme' => 'imagefield_slideshow',
       '#url' => $image_uri_values,
       '#prev_next' => $prev_next,
@@ -300,7 +302,7 @@ class ImagefieldSlideshowFieldFormatter extends ImageFormatterBase implements Co
       '#speed' => $this->getSetting('imagefield_slideshow_transition_speed'),
       '#timeout' => $this->getSetting('imagefield_slideshow_timeout'),
       '#pager' => $this->getSetting('imagefield_slideshow_pager'),
-    );
+    ];
 
     // Attach the image field slide show library.
     $elements['#attached']['library'][] = 'imagefield_slideshow/imagefield_slideshow';

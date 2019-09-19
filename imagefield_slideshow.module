@@ -26,9 +26,9 @@ function imagefield_slideshow_help($route_name, RouteMatchInterface $route_match
  * Implements hook_theme().
  */
 function imagefield_slideshow_theme() {
-  return array(
-    'imagefield_slideshow' => array(
-      'variables' => array(
+  return [
+    'imagefield_slideshow' => [
+      'variables' => [
         'url' => NULL,
         'effect' => NULL,
         'pause' => NULL,
@@ -36,7 +36,7 @@ function imagefield_slideshow_theme() {
         'speed' => NULL,
         'timeout' => NULL,
         'pager' => NULL,
-      ),
-    ),
-  );
+      ],
+    ],
+  ];
 }
