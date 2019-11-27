@@ -95,10 +95,10 @@ class ImagefieldSlideshowFieldFormatter extends ImageFormatterBase implements Co
       'imagefield_slideshow_style' => 'large',
       'imagefield_slideshow_style_effects' => 'fade',
       'imagefield_slideshow_style_pause' => 'false',
-      'imagefield_slideshow_prev_next' => FALSE,
-      'imagefield_slideshow_transition_speed' => FALSE,
-      'imagefield_slideshow_timeout' => FALSE,
-      'imagefield_slideshow_pager' => FALSE,
+      'imagefield_slideshow_prev_next' => 'true',
+      'imagefield_slideshow_transition_speed' => 100,
+      'imagefield_slideshow_timeout' => 100,
+      'imagefield_slideshow_pager' => TRUE,
     ] + parent::defaultSettings();
   }
 
