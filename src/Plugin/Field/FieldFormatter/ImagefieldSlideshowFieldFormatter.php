@@ -286,7 +286,7 @@ class ImagefieldSlideshowFieldFormatter extends ImageFormatterBase implements Co
       }
       else {
         // Get absolute path for original image
-        $image_uri = $image->toUrl()->toString();
+        $image_uri = $image->createFileUrl(FALSE);
       }
       $image_uri_values[] = $image_uri;
     }
