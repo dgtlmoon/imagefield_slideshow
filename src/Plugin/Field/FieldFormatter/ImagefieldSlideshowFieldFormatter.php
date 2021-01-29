@@ -2,7 +2,6 @@
 
 namespace Drupal\imagefield_slideshow\Plugin\Field\FieldFormatter;
 
-use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Form\FormStateInterface;
@@ -11,11 +10,12 @@ use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Url;
 use Drupal\image\Entity\ImageStyle;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\image\Plugin\Field\FieldFormatter\ImageFormatterBase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Plugin implementation of the 'imagefield_slideshow_field_formatter' formatter.
+ * Plugin implementation of 'imagefield_slideshow_field_formatter' formatter.
  *
  * @FieldFormatter(
  *   id = "imagefield_slideshow_field_formatter",
@@ -33,6 +33,13 @@ class ImagefieldSlideshowFieldFormatter extends ImageFormatterBase implements Co
    * @var \Drupal\Core\Session\AccountInterface
    */
   protected $currentUser;
+
+  /**
+   * The entity type manager service.
+   *
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
+   */
+  protected $entityTypeManager;
 
   /**
    * The image style entity storage.
@@ -60,13 +67,19 @@ class ImagefieldSlideshowFieldFormatter extends ImageFormatterBase implements Co
    *   Any third party settings settings.
    * @param \Drupal\Core\Session\AccountInterface $current_user
    *   The current user.
-   * @param \Drupal\Core\Entity\EntityStorageInterface $image_style_storage
-   *   The image style.
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
+   *   The entity type manager service.
+   *
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
+   *   Thrown if the entity type doesn't exist.
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   *   Thrown if the storage handler couldn't be loaded.
    */
-  public function __construct($plugin_id, $plugin_definition, FieldDefinitionInterface $field_definition, array $settings, $label, $view_mode, array $third_party_settings, AccountInterface $current_user, EntityStorageInterface $image_style_storage) {
+  public function __construct($plugin_id, $plugin_definition, FieldDefinitionInterface $field_definition, array $settings, $label, $view_mode, array $third_party_settings, AccountInterface $current_user, EntityTypeManagerInterface $entity_type_manager) {
     parent::__construct($plugin_id, $plugin_definition, $field_definition, $settings, $label, $view_mode, $third_party_settings);
     $this->currentUser = $current_user;
-    $this->imageStyleStorage = $image_style_storage;
+    $this->entityTypeManager = $entity_type_manager;
+    $this->imageStyleStorage = $this->entityTypeManager->getStorage('image_style');
   }
 
   /**
@@ -82,7 +95,7 @@ class ImagefieldSlideshowFieldFormatter extends ImageFormatterBase implements Co
       $configuration['view_mode'],
       $configuration['third_party_settings'],
       $container->get('current_user'),
-      $container->get('entity.manager')->getStorage('image_style')
+      $container->get('entity_type.manager')
     );
   }
 
@@ -223,37 +236,49 @@ class ImagefieldSlideshowFieldFormatter extends ImageFormatterBase implements Co
       $summary[] = t("Image style: @style", ['@style' => $image_styles[$image_style_setting]]);
     }
     else {
-      $summary[] = t("Original image");
+      $summary[] = $this->t("Original image");
     }
 
     $image_style_effect = $this->getSetting('imagefield_slideshow_style_effects');
     if (isset($image_style_effect)) {
-      $summary[] .= t("Effect :" . $image_style_effect);
+      $summary[] .= $this->t("Effect: @image_style_effect", [
+        "@image_style_effect" => $image_style_effect,
+      ]);
     }
 
     $image_style_pause = $this->getSetting('imagefield_slideshow_style_pause');
     if (!empty($image_style_pause)) {
-      $summary[] .= t("Pause :" . $image_style_pause);
+      $summary[] .= $this->t("Pause: @image_style_pause", [
+        "@image_style_pause" => $image_style_pause,
+      ]);
     }
 
     $image_prev_next = $this->getSetting('imagefield_slideshow_prev_next');
     if ($image_prev_next) {
-      $summary[] .= t("Prev & Next :" . $image_prev_next);
+      $summary[] .= $this->t("Prev & Next: @image_prev_next", [
+        "@image_prev_next" => $image_prev_next,
+      ]);
     }
 
     $image_transition_speed = $this->getSetting('imagefield_slideshow_transition_speed');
     if ($image_transition_speed) {
-      $summary[] .= t("Transition Speed :" . $image_transition_speed . ' fx');
+      $summary[] .= $this->t("Transition Speed: @image_transition_speed fx", [
+        "@image_transition_speed" => $image_transition_speed,
+      ]);
     }
 
     $image_slideshow_timeout = $this->getSetting('imagefield_slideshow_timeout');
     if ($image_slideshow_timeout) {
-      $summary[] .= t("Timeout :" . $image_slideshow_timeout);
+      $summary[] .= $this->t("Timeout: @image_slideshow_timeout", [
+        "@image_slideshow_timeout" => $image_slideshow_timeout,
+      ]);
     }
 
     $image_pager = $this->getSetting('imagefield_slideshow_pager');
     if ($image_pager) {
-      $summary[] .= t("Pager :" . $image_pager);
+      $summary[] .= $this->t("Pager: @image_pager", [
+        "@image_pager" => $image_pager,
+      ]);
     }
 
     return $summary;
@@ -280,12 +305,12 @@ class ImagefieldSlideshowFieldFormatter extends ImageFormatterBase implements Co
     $image_uri_values = [];
     foreach ($images as $image) {
       $image_uri = $image->getFileUri();
-      // Get image style URL
+      // Get image style URL.
       if ($image_style) {
         $image_uri = ImageStyle::load($image_style->getName())->buildUrl($image_uri);
       }
       else {
-        // Get absolute path for original image
+        // Get absolute path for original image.
         $image_uri = $image->createFileUrl(FALSE);
       }
       $image_uri_values[] = $image_uri;
