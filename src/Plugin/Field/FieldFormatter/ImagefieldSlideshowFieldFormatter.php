@@ -290,6 +290,9 @@ class ImagefieldSlideshowFieldFormatter extends ImageFormatterBase implements Co
   public function viewElements(FieldItemListInterface $items, $langcode) {
     $elements = [];
 
+    // Get the Entity value as array.
+    $file = $items->getEntity()->toArray();
+
     // Early opt-out if the field is empty.
     $images = $this->getEntitiesToView($items, $langcode);
     if (empty($images)) {
@@ -313,7 +316,20 @@ class ImagefieldSlideshowFieldFormatter extends ImageFormatterBase implements Co
         // Get absolute path for original image.
         $image_uri = $image->createFileUrl(FALSE);
       }
-      $image_uri_values[] = $image_uri;
+      // Populate image uri's with fid.
+      $fid = $image->toArray()['fid'][0][value];
+      $image_uri_values[$fid] = ['uri' => $image_uri];
+    }
+
+    // Populate the title and alt of images based on fid.
+    foreach (['title', 'alt'] as $element_name) {
+      $field_name = $this->fieldDefinition->getName();
+      if (array_key_exists($field_name, $file)) {
+        foreach($file[$field_name] as $key => $value) {
+          $image_uri_values[$value['target_id']]['alt'] = $value['alt'];
+          $image_uri_values[$value['target_id']]['title'] = $value['title'];
+        }
+      }
     }
 
     // Enable prev next if only more than one image.

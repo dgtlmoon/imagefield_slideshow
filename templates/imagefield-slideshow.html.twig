@@ -28,7 +28,7 @@
             <div class="cycle-pager"></div>
         {% endif %}
         {% for key,value in url %}
-            <img src="{{ value }}" />
+            <img title="{{ value.title }}" alt="{{ value.alt }}" src="{{ value.uri }}" />
         {% endfor %}
     </div>
     {% if prev_next %}
