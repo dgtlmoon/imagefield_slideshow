@@ -317,7 +317,7 @@ class ImagefieldSlideshowFieldFormatter extends ImageFormatterBase implements Co
         $image_uri = $image->createFileUrl(FALSE);
       }
       // Populate image uri's with fid.
-      $fid = $image->toArray()['fid'][0][value];
+      $fid = $image->toArray()['fid'][0]['value'];
       $image_uri_values[$fid] = ['uri' => $image_uri];
     }
 
