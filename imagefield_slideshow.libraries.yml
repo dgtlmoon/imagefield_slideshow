@@ -1,10 +1,10 @@
 imagefield_slideshow:
   version: 1.x
   js:
+    https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js: { type: external, minified: true }
     https://cdnjs.cloudflare.com/ajax/libs/jquery.cycle2/2.1.6/jquery.cycle2.min.js: { type: external, minified: true }
-    js/jquery.cycle2.flip.min.js: {} # http://malsup.github.io/min/jquery.cycle2.flip.min.js
-    js/jquery.cycle2.shuffle.js: {} # http://malsup.github.io/jquery.cycle2.shuffle.js
-    js/imagefield-slideshow.js: {}
+    https://cdnjs.cloudflare.com/ajax/libs/jquery.cycle2/2.1.6/jquery.cycle2.flip.min.js: { type: external, minified: true }
+    https://cdnjs.cloudflare.com/ajax/libs/jquery.cycle2/2.1.6/jquery.cycle2.shuffle.min.js: { type: external, minified: true }
   css:
     theme:
       css/imagefield-slideshow.css: {}
