@@ -112,6 +112,7 @@ class ImagefieldSlideshowFieldFormatter extends ImageFormatterBase implements Co
       'imagefield_slideshow_transition_speed' => 100,
       'imagefield_slideshow_timeout' => 100,
       'imagefield_slideshow_pager' => TRUE,
+      'imagefield_slideshow_link_image_to' => '',
     ] + parent::defaultSettings();
   }
 
@@ -217,6 +218,13 @@ class ImagefieldSlideshowFieldFormatter extends ImageFormatterBase implements Co
       '#default_value' => $this->getSetting('imagefield_slideshow_pager'),
       '#description' => $this->t('This will show the Pager on slideshow.'),
     ];
+    $link_image_to = ['' => 'Nothing', 'content' => 'Content', 'file' => 'File'];
+    $element['imagefield_slideshow_link_image_to'] = [
+      '#type' => 'select',
+      '#title' => t("Link image to"),
+      '#options' => $link_image_to,
+      '#default_value' => $this->getSetting('imagefield_slideshow_link_image_to'),
+    ];
     return $element;
   }
 
@@ -281,6 +289,13 @@ class ImagefieldSlideshowFieldFormatter extends ImageFormatterBase implements Co
       ]);
     }
 
+    $link_image_to = $this->getSetting('imagefield_slideshow_link_image_to');
+    if ($link_image_to) {
+      $summary[] .= $this->t("Link Image to: @link_image_to", [
+        "@link_image_to" => $link_image_to,
+      ]);
+    }
+
     return $summary;
   }
 
@@ -338,6 +353,18 @@ class ImagefieldSlideshowFieldFormatter extends ImageFormatterBase implements Co
       $prev_next = FALSE;
     }
 
+    $imagefield_slideshow_link_image_to = $this->getSetting('imagefield_slideshow_link_image_to');
+    $link_image_to = [];
+    $link_image_to['type'] = $imagefield_slideshow_link_image_to;
+    if ($imagefield_slideshow_link_image_to == 'content') {
+      $link_image_to['type'] = 'content';
+      $content_url = '/node/' . $file['nid'][0]['value'];
+      $link_image_to['path'] = \Drupal::service('path_alias.manager')->getAliasByPath($content_url);
+    }
+    else if ($imagefield_slideshow_link_image_to == '') {
+      $link_image_to = FALSE;
+    }
+
     $elements[] = [
       '#theme' => 'imagefield_slideshow',
       '#url' => $image_uri_values,
@@ -347,6 +374,7 @@ class ImagefieldSlideshowFieldFormatter extends ImageFormatterBase implements Co
       '#speed' => $this->getSetting('imagefield_slideshow_transition_speed'),
       '#timeout' => $this->getSetting('imagefield_slideshow_timeout'),
       '#pager' => $this->getSetting('imagefield_slideshow_pager'),
+      '#link_image_to' => $link_image_to,
     ];
 
     // Attach the image field slide show library.

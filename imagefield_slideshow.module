@@ -36,6 +36,7 @@ function imagefield_slideshow_theme() {
         'speed' => NULL,
         'timeout' => NULL,
         'pager' => NULL,
+        'link_image_to' => NULL,
       ],
     ],
   ];

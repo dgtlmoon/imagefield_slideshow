@@ -28,7 +28,16 @@
             <div class="cycle-pager"></div>
         {% endif %}
         {% for key,value in url %}
-            <img title="{{ value.title }}" alt="{{ value.alt }}" src="{{ value.uri }}" />
+            {% if link_image_to %}
+                {% if link_image_to.type == 'content' %}
+                    <img title="{{ value.title }}" alt="{{ value.alt }}" src="{{ value.uri }}" onclick="window.open('{{ link_image_to.path }}', '_self')" />
+                {% endif %}
+                {% if link_image_to.type == 'file' %}
+                    <img title="{{ value.title }}" alt="{{ value.alt }}" src="{{ value.uri }}" onclick="window.open('{{ value.uri }}', '_self')" />
+                {% endif %}
+            {% else %}
+                <img title="{{ value.title }}" alt="{{ value.alt }}" src="{{ value.uri }}" />
+            {% endif %}
         {% endfor %}
     </div>
     {% if prev_next %}
