@@ -14,8 +14,7 @@ function imagefield_slideshow_help($route_name, RouteMatchInterface $route_match
   switch ($route_name) {
     // Main module help for the imagefield slideshow module.
     case 'help.page.imagefield_slideshow':
-      $output = '';
-      $output .= '<h3>' . t('Imagefield Slideshow') . '</h3>';
+      $output = '<h3>' . t('Imagefield Slideshow') . '</h3>';
       $output .= '<p>' . t('Imagefield Slideshow will provide a field formatter, so that the images uploaded for an image field would be rendered as a Slider.') . '</p>';
       $output .= '<p>' . t('Visit module page for more details.') . '</p>';
       return $output;

@@ -22,7 +22,7 @@ This module does not have any dependency.
 ## INSTALLATION
 
 - Download the module and place in contrib module folder.
-- Enable the Imagefield Slideshow module from the, modules page / drush / drupal console.
+- Enable the Imagefield Slideshow module from the modules page / drush / drupal console.
 - You should now see a new field formatter for image fields,
   Ex: under Manage display section of each content types.
 

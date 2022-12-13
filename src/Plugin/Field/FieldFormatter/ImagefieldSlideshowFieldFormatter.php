@@ -341,7 +341,7 @@ class ImagefieldSlideshowFieldFormatter extends ImageFormatterBase implements Co
     foreach (['title', 'alt'] as $element_name) {
       $field_name = $this->fieldDefinition->getName();
       if (array_key_exists($field_name, $file)) {
-        foreach($file[$field_name] as $key => $value) {
+        foreach ($file[$field_name] as $key => $value) {
           $image_uri_values[$value['target_id']]['alt'] = $value['alt'];
           $image_uri_values[$value['target_id']]['title'] = $value['title'];
         }
@@ -362,7 +362,7 @@ class ImagefieldSlideshowFieldFormatter extends ImageFormatterBase implements Co
       $content_url = '/node/' . $file['nid'][0]['value'];
       $link_image_to['path'] = \Drupal::service('path_alias.manager')->getAliasByPath($content_url);
     }
-    else if ($imagefield_slideshow_link_image_to == '') {
+    elseif ($imagefield_slideshow_link_image_to == '') {
       $link_image_to = FALSE;
     }
 
