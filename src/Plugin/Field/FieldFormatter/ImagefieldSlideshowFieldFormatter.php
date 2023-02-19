@@ -105,14 +105,15 @@ class ImagefieldSlideshowFieldFormatter extends ImageFormatterBase implements Co
   public static function defaultSettings() {
     return [
       // Implement default settings.
+      'imagefield_slideshow_link_image_to' => '',
+      'imagefield_slideshow_no_template_pager' => 'false',
+      'imagefield_slideshow_pager' => TRUE,
+      'imagefield_slideshow_prev_next' => 'true',
       'imagefield_slideshow_style' => 'large',
       'imagefield_slideshow_style_effects' => 'fade',
       'imagefield_slideshow_style_pause' => 'false',
-      'imagefield_slideshow_prev_next' => 'true',
-      'imagefield_slideshow_transition_speed' => 100,
       'imagefield_slideshow_timeout' => 100,
-      'imagefield_slideshow_pager' => TRUE,
-      'imagefield_slideshow_link_image_to' => '',
+      'imagefield_slideshow_transition_speed' => 100,
     ] + parent::defaultSettings();
   }
 
@@ -185,6 +186,13 @@ class ImagefieldSlideshowFieldFormatter extends ImageFormatterBase implements Co
       '#type' => 'select',
       '#default_value' => $this->getSetting('imagefield_slideshow_style_pause'),
       '#options' => $image_pause,
+      '#description' => t("Should image be paused on hover."),
+    ];
+
+    $element['imagefield_slideshow_no_template_pager'] = [
+      '#title' => t("Separate 'no template' pager"),
+      '#type' => 'checkbox',
+      '#default_value' => $this->getSetting('imagefield_slideshow_no_template_pager'),
       '#description' => t("Should image be paused on hover."),
     ];
     $element['imagefield_slideshow_prev_next'] = [
@@ -267,7 +275,12 @@ class ImagefieldSlideshowFieldFormatter extends ImageFormatterBase implements Co
         "@image_prev_next" => $image_prev_next,
       ]);
     }
-
+    $image_no_template = $this->getSetting('imagefield_slideshow_no_template_pager');
+    if ($image_prev_next) {
+      $summary[] = $this->t("Separate thumb template: @image_no_template", [
+        "@image_no_template" => $image_no_template,
+      ]);
+    }
     $image_transition_speed = $this->getSetting('imagefield_slideshow_transition_speed');
     if ($image_transition_speed) {
       $summary[] = $this->t("Transition Speed: @image_transition_speed fx", [
@@ -375,6 +388,7 @@ class ImagefieldSlideshowFieldFormatter extends ImageFormatterBase implements Co
       '#speed' => $this->getSetting('imagefield_slideshow_transition_speed'),
       '#timeout' => $this->getSetting('imagefield_slideshow_timeout'),
       '#pager' => $this->getSetting('imagefield_slideshow_pager'),
+      '#no_template_pager' => $this->getSetting('imagefield_slideshow_no_template_pager') != "false",
       '#link_image_to' => $link_image_to,
     ];
 

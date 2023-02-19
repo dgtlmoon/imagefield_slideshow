@@ -15,6 +15,7 @@
 #}
 {% set prev = random() %}
 {% set next = random() %}
+
 <div class="imagefield_slideshow-wrapper">
     <div class="cycle-slideshow"
          data-cycle-pause-on-hover='{{ pause }}'
@@ -23,7 +24,12 @@
          data-cycle-timeout="{{ timeout }}"
          data-cycle-prev="#imagefield_slideshow-prev-{{ prev }}"
          data-cycle-next="#imagefield_slideshow-next-{{ next }}"
-         data-cycle-loader="wait">
+         data-cycle-loader="wait"
+{%  if no_template_pager %}
+         data-cycle-pager="#no-template-pager"
+         data-cycle-pager-template=""
+{% endif %}
+    >
         {% if pager %}
             <div class="cycle-pager"></div>
         {% endif %}
@@ -46,4 +52,13 @@
             <a href=# id="imagefield_slideshow-next-{{ next }}">Next</a>
         </div>
     {% endif %}
+
+  {%  if no_template_pager  %}
+  <div id=no-template-pager class="product-cycle-pager external">
+    <!-- separate thumb pager -->
+    {% for key,value in url %}
+      <img title="{{ value.title }}" alt="{{ value.alt }}" src="{{ value.uri }}"  width=40 />
+    {% endfor %}
+  </div>
+  {% endif %}
 </div>

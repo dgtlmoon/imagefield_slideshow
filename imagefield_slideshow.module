@@ -30,6 +30,7 @@ function imagefield_slideshow_theme() {
       'variables' => [
         'url' => NULL,
         'effect' => NULL,
+        'no_template_pager' => NULL,
         'pause' => NULL,
         'prev_next' => NULL,
         'speed' => NULL,
